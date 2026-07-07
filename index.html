@@ -57,9 +57,25 @@
   .faq-chevron { transition: transform 0.2s ease-in-out; }
   summary::-webkit-details-marker { display: none; }
 
+  /* Scroll reveal: slide up + fade in as elements enter the viewport */
+  .reveal {
+    opacity: 0;
+    transform: translateY(2.5rem);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--reveal-delay, 0s);
+  }
+  .reveal.reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { --reveal-delay: 0.1s; }
+  .reveal-delay-2 { --reveal-delay: 0.2s; }
+  .reveal-delay-3 { --reveal-delay: 0.3s; }
+
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     * { transition: none !important; }
+    .reveal { opacity: 1; transform: none; }
   }
 </style>
 </head>
@@ -232,20 +248,22 @@
 
 <!-- ============ SECTION 3 · LOGOS ============ -->
 <section class="max-w-7xl mx-auto px-6 mt-24 lg:mt-40">
-  <p class="text-center text-sm text-obsidian/50">Trusted by teams who’d rather not answer their own email</p>
-  <div class="mt-8 flex flex-wrap items-center justify-center gap-x-12 gap-y-8 opacity-70 grayscale">
-    <img src="https://assets.tailwindplus.com/logos/8.svg?color=black&height=32" alt="Quirk" class="h-6" />
-    <img src="https://assets.tailwindplus.com/logos/9.svg?color=black&height=32" alt="Concise" class="h-6" />
-    <img src="https://assets.tailwindplus.com/logos/10.svg?color=black&height=32" alt="Anomaly" class="h-6" />
-    <img src="https://assets.tailwindplus.com/logos/11.svg?color=black&height=32" alt="Pine Labs" class="h-6" />
-    <img src="https://assets.tailwindplus.com/logos/12.svg?color=black&height=32" alt="Orbital" class="h-6" />
-    <img src="https://assets.tailwindplus.com/logos/13.svg?color=black&height=32" alt="Artifact" class="h-6" />
+  <p class="reveal text-center text-sm text-obsidian/50">Trusted by teams who’d rather not answer their own email</p>
+  <div class="reveal reveal-delay-1 mt-8">
+    <div class="flex flex-wrap items-center justify-center gap-x-12 gap-y-8 opacity-70 grayscale">
+      <img src="https://assets.tailwindplus.com/logos/8.svg?color=black&height=32" alt="Quirk" class="h-6" />
+      <img src="https://assets.tailwindplus.com/logos/9.svg?color=black&height=32" alt="Concise" class="h-6" />
+      <img src="https://assets.tailwindplus.com/logos/10.svg?color=black&height=32" alt="Anomaly" class="h-6" />
+      <img src="https://assets.tailwindplus.com/logos/11.svg?color=black&height=32" alt="Pine Labs" class="h-6" />
+      <img src="https://assets.tailwindplus.com/logos/12.svg?color=black&height=32" alt="Orbital" class="h-6" />
+      <img src="https://assets.tailwindplus.com/logos/13.svg?color=black&height=32" alt="Artifact" class="h-6" />
+    </div>
   </div>
 </section>
 
 <!-- ============ SECTION 4 · FEATURES ============ -->
 <section class="max-w-7xl mx-auto px-6 mt-24 lg:mt-40">
-  <div class="max-w-3xl">
+  <div class="reveal max-w-3xl">
     <h2 class="font-serif text-4xl sm:text-5xl leading-[1.1] tracking-tight text-obsidian">
       Everything you need to deliver personal, organized, and delightful support.
     </h2>
@@ -260,7 +278,7 @@
 
   <div class="mt-14 grid grid-cols-1 md:grid-cols-3 gap-6">
     <!-- Card 1 -->
-    <article class="bg-surface rounded-3xl p-2 pb-7 border border-black/[0.03]">
+    <article class="reveal bg-surface rounded-3xl p-2 pb-7 border border-black/[0.03]">
       <div class="rounded-2xl overflow-hidden bg-white aspect-[4/3] border border-black/[0.05]">
         <img src="https://assets.tailwindplus.com/screenshots/1.webp?left=1200&top=736&color=mauve" alt="Shared inbox" class="w-full h-full object-cover object-left" />
       </div>
@@ -276,7 +294,7 @@
     </article>
 
     <!-- Card 2 -->
-    <article class="bg-surface rounded-3xl p-2 pb-7 border border-black/[0.03]">
+    <article class="reveal reveal-delay-1 bg-surface rounded-3xl p-2 pb-7 border border-black/[0.03]">
       <div class="rounded-2xl overflow-hidden bg-white aspect-[4/3] border border-black/[0.05]">
         <img src="https://assets.tailwindplus.com/screenshots/1.webp?left=1800&top=736&color=mauve" alt="Collision detection" class="w-full h-full object-cover object-left-top" />
       </div>
@@ -292,7 +310,7 @@
     </article>
 
     <!-- Card 3 -->
-    <article class="bg-surface rounded-3xl p-2 pb-7 border border-black/[0.03]">
+    <article class="reveal reveal-delay-2 bg-surface rounded-3xl p-2 pb-7 border border-black/[0.03]">
       <div class="rounded-2xl overflow-hidden bg-white aspect-[4/3] border border-black/[0.05]">
         <img src="https://assets.tailwindplus.com/screenshots/1.webp?right=1200&bottom=736&color=mauve" alt="Inbox agent" class="w-full h-full object-cover object-left" />
       </div>
@@ -313,7 +331,7 @@
 <section class="max-w-7xl mx-auto px-6 mt-24 lg:mt-40">
   <div class="relative isolate overflow-hidden rounded-[2rem] bg-surface border border-black/[0.05] px-6 pt-14 sm:px-12 sm:pt-16">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start relative z-10">
-      <div>
+      <div class="reveal">
         <p class="text-sm font-medium tracking-wide uppercase text-mauve">Built for scale</p>
         <h2 class="mt-4 font-serif text-4xl sm:text-5xl leading-[1.1] tracking-tight text-obsidian">
           The inbox powering customer conversations everywhere.
@@ -323,7 +341,7 @@
         </p>
       </div>
 
-      <div class="grid grid-cols-2 gap-8">
+      <div class="reveal reveal-delay-1 grid grid-cols-2 gap-8">
         <div>
           <p class="font-serif text-5xl sm:text-6xl text-obsidian leading-none">2M+</p>
           <p class="mt-3 text-sm text-obsidian/60">Messages handled every month</p>
@@ -361,11 +379,11 @@
 
 <!-- ============ SECTION 6 · TESTIMONIAL ============ -->
 <section class="max-w-5xl mx-auto px-6 mt-24 lg:mt-40 text-center">
-  <i data-lucide="quote" class="w-8 h-8 mx-auto text-mauve/40"></i>
-  <blockquote class="mt-6 font-serif text-obsidian leading-[1.15] tracking-tight text-[2.75rem]">
+  <i data-lucide="quote" class="reveal w-8 h-8 mx-auto text-mauve/40"></i>
+  <blockquote class="reveal reveal-delay-1 mt-6 font-serif text-obsidian leading-[1.15] tracking-tight text-[2.75rem]">
     “Oatmeal has completely transformed our customer support operations. The blend of AI efficiency and human empathy has allowed us to provide exceptional service while significantly reducing costs.”
   </blockquote>
-  <div class="mt-8 flex items-center justify-center gap-3">
+  <div class="reveal reveal-delay-2 mt-8 flex items-center justify-center gap-3">
     <img src="https://assets.tailwindplus.com/avatars/10.webp?size=160" alt="Jordan Rogers" class="w-14 h-14 rounded-full object-cover" />
     <div class="text-left">
       <p class="text-sm font-medium text-obsidian">Jordan Rogers</p>
@@ -376,14 +394,14 @@
 
 <!-- ============ SECTION 7 · PRICING ============ -->
 <section id="pricing" class="max-w-7xl mx-auto px-6 mt-24 lg:mt-40">
-  <div class="max-w-2xl">
+  <div class="reveal max-w-2xl">
     <h2 class="font-serif text-4xl sm:text-5xl leading-[1.1] tracking-tight text-obsidian">Simple pricing for teams of any size.</h2>
     <p class="mt-5 text-lg font-light leading-relaxed text-obsidian/60">Pick a plan. Upgrade when the guilt about ignoring customers gets too heavy.</p>
   </div>
 
   <div class="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
     <!-- Starter -->
-    <div class="bg-surface-pricing rounded-[2rem] p-8 flex flex-col border border-black/[0.03]">
+    <div class="reveal bg-surface-pricing rounded-[2rem] p-8 flex flex-col border border-black/[0.03]">
       <h3 class="text-lg font-medium text-obsidian">Starter</h3>
       <p class="mt-2 text-sm text-obsidian/55">For solo founders answering their own tickets.</p>
       <p class="mt-6 font-serif text-5xl text-obsidian leading-none">$0<span class="font-sans text-base font-normal text-obsidian/50">/mo</span></p>
@@ -397,7 +415,7 @@
     </div>
 
     <!-- Growth (most popular) -->
-    <div class="relative bg-surface-alt rounded-[2rem] p-8 flex flex-col border border-black/[0.05] shadow-lg">
+    <div class="reveal reveal-delay-1 relative bg-surface-alt rounded-[2rem] p-8 flex flex-col border border-black/[0.05] shadow-lg">
       <span class="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center rounded-full bg-obsidian text-white text-[11px] font-medium px-3 py-1">Most popular</span>
       <h3 class="text-lg font-medium text-obsidian">Growth</h3>
       <p class="mt-2 text-sm text-obsidian/55">For teams scaling support without scaling headcount.</p>
@@ -413,7 +431,7 @@
     </div>
 
     <!-- Pro -->
-    <div class="bg-surface-pricing rounded-[2rem] p-8 flex flex-col border border-black/[0.03]">
+    <div class="reveal reveal-delay-2 bg-surface-pricing rounded-[2rem] p-8 flex flex-col border border-black/[0.03]">
       <h3 class="text-lg font-medium text-obsidian">Pro</h3>
       <p class="mt-2 text-sm text-obsidian/55">For enterprise teams with a global (and cheap) workforce.</p>
       <p class="mt-6 font-serif text-5xl text-obsidian leading-none">$99<span class="font-sans text-base font-normal text-obsidian/50">/mo</span></p>
@@ -432,12 +450,12 @@
 <!-- ============ SECTION · FAQ ============ -->
 <section class="max-w-7xl mx-auto px-6 mt-24 lg:mt-40">
   <div class="grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-10 lg:gap-16 items-start">
-    <div class="lg:sticky lg:top-16">
+    <div class="reveal lg:sticky lg:top-16">
       <h2 class="font-serif text-4xl sm:text-5xl leading-[1.1] tracking-tight text-obsidian">Questions &amp; Answers</h2>
       <p class="mt-5 text-lg font-light leading-relaxed text-obsidian/60 max-w-sm">Everything you were going to email us anyway — answered before you hit send.</p>
     </div>
 
-    <div class="divide-y divide-black/[0.08] border-t border-b border-black/[0.08]">
+    <div class="reveal reveal-delay-1 divide-y divide-black/[0.08] border-t border-b border-black/[0.08]">
     <details class="faq-item group py-5">
       <summary class="flex items-center justify-between gap-4 cursor-pointer list-none">
         <span class="text-lg text-obsidian">Do I need a credit card to start the free trial?</span>
@@ -476,7 +494,7 @@
     <div class="absolute inset-0 -z-20 bg-[radial-gradient(120%_120%_at_50%_0%,transparent_40%,#2C2428_130%)]"></div>
     <div class="grain-overlay absolute inset-0 -z-10 pointer-events-none"></div>
 
-    <div class="relative z-10 max-w-2xl mx-auto">
+    <div class="reveal relative z-10 max-w-2xl mx-auto">
       <h2 class="font-serif text-4xl sm:text-5xl lg:text-6xl leading-[1.05] tracking-tight text-white">
         Ready to make customer support feel simple again?
       </h2>
@@ -561,6 +579,23 @@
 <script>
   window.addEventListener('DOMContentLoaded', function () {
     if (window.lucide) lucide.createIcons();
+
+    var revealEls = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window) || !revealEls.length) {
+      revealEls.forEach(function (el) { el.classList.add('reveal-visible'); });
+      return;
+    }
+
+    var observer = new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('reveal-visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -80px 0px' });
+
+    revealEls.forEach(function (el) { observer.observe(el); });
   });
 </script>
 
