@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Blog — Oatmeal</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          serif: ['"Instrument Serif"', 'ui-serif', 'Georgia', 'serif'],
+        },
+        colors: {
+          cream: '#F8F6F8',
+          obsidian: '#272125',
+          mauve: '#7A6470',
+          surface: '#EFECEE',
+          'surface-alt': '#EAE6E8',
+          'surface-pricing': '#F0EDEF',
+          'pricing-btn': '#E5E0E3',
+          'hero-overlay': '#2C2428',
+          'accent-blue': '#3B82F6',
+        },
+      },
+    },
+  };
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: #F8F6F8;
+    color: #272125;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background-color: #272125; color: #F8F6F8; }
+  ::-moz-selection { background-color: #272125; color: #F8F6F8; }
+
+  /* SVG fractal-noise grain, 30% opacity, overlay blend */
+  .grain-overlay {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 240px 240px;
+    opacity: 0.30;
+    mix-blend-mode: overlay;
+  }
+
+  /* Scroll reveal: slide up + fade in as elements enter the viewport */
+  .reveal {
+    opacity: 0;
+    transform: translateY(2.5rem);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--reveal-delay, 0s);
+  }
+  .reveal.reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { --reveal-delay: 0.1s; }
+  .reveal-delay-2 { --reveal-delay: 0.2s; }
+  .reveal-delay-3 { --reveal-delay: 0.3s; }
+  .reveal-delay-4 { --reveal-delay: 0.4s; }
+
+  /* Variant: slide in from the side instead of from below */
+  .reveal-side { transform: translateX(3rem); }
+  .reveal-side.reveal-visible { transform: translateX(0); }
+
+  /* Cards: entrance transition (opacity/transform) plus a separate,
+     un-delayed hover transition (shadow/border) so hovering never waits on --reveal-delay. */
+  .feature-card {
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+    transition-delay: var(--reveal-delay, 0s), var(--reveal-delay, 0s), 0s, 0s;
+  }
+  .feature-card:hover {
+    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.10), 0 8px 10px -6px rgba(0,0,0,0.10);
+    border-color: rgba(0,0,0,0.08);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+
+<body class="antialiased selection:bg-obsidian">
+
+<!-- ============ NAVIGATION ============ -->
+<header>
+  <nav class="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
+    <a href="index.html" class="font-serif text-3xl tracking-tight leading-none text-obsidian">Oatmeal.</a>
+
+    <div class="hidden md:flex items-center gap-9">
+      <a href="index.html#pricing" class="text-sm font-medium text-obsidian hover:opacity-70 transition-opacity">Pricing</a>
+      <a href="about.html" class="text-sm font-medium text-obsidian hover:opacity-70 transition-opacity">About</a>
+      <a href="blog.html" class="text-sm font-medium text-obsidian hover:opacity-70 transition-opacity">Blog</a>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <a href="#" class="hidden sm:inline-flex text-sm font-medium text-obsidian hover:opacity-70 transition-opacity">Login</a>
+      <a href="#" class="inline-flex items-center gap-1.5 bg-[#272125] text-white text-sm font-medium rounded-full pl-5 pr-4 py-2.5 hover:opacity-90 transition-colors">
+        Get started
+        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+      </a>
+    </div>
+  </nav>
+</header>
+
+<!-- ============ PAGE HEADER ============ -->
+<section class="max-w-7xl mx-auto px-6 mt-14 lg:mt-20">
+  <div class="reveal max-w-2xl">
+    <p class="text-sm font-medium tracking-wide uppercase text-mauve">From the team</p>
+    <h1 class="mt-4 font-serif text-4xl sm:text-5xl lg:text-6xl leading-[1.1] tracking-tight text-obsidian">
+      Notes on support, shipped features, and the occasional rant.
+    </h1>
+    <p class="mt-5 text-lg font-light leading-relaxed text-obsidian/60">
+      Product updates, lessons from the inbox, and whatever else the team felt strongly enough about to write down.
+    </p>
+  </div>
+
+  <div class="reveal reveal-delay-1 mt-8 flex flex-wrap gap-2">
+    <span class="inline-flex items-center rounded-full bg-obsidian text-white text-xs font-medium px-4 py-2">All posts</span>
+    <span class="inline-flex items-center rounded-full bg-surface text-obsidian/70 text-xs font-medium px-4 py-2 border border-black/[0.05]">Product</span>
+    <span class="inline-flex items-center rounded-full bg-surface text-obsidian/70 text-xs font-medium px-4 py-2 border border-black/[0.05]">Support</span>
+    <span class="inline-flex items-center rounded-full bg-surface text-obsidian/70 text-xs font-medium px-4 py-2 border border-black/[0.05]">Company</span>
+    <span class="inline-flex items-center rounded-full bg-surface text-obsidian/70 text-xs font-medium px-4 py-2 border border-black/[0.05]">Engineering</span>
+    <span class="inline-flex items-center rounded-full bg-surface text-obsidian/70 text-xs font-medium px-4 py-2 border border-black/[0.05]">Culture</span>
+  </div>
+</section>
+
+<!-- ============ FEATURED POST ============ -->
+<section class="max-w-7xl mx-auto px-6 mt-12">
+  <a href="#" class="reveal reveal-delay-2 feature-card group block bg-surface rounded-[2rem] border border-black/[0.03] overflow-hidden">
+    <div class="grid grid-cols-1 lg:grid-cols-2">
+      <div class="aspect-[16/10] lg:aspect-auto overflow-hidden">
+        <img src="https://assets.tailwindplus.com/screenshots/1.webp?left=1200&top=400&color=mauve" alt="How we cut first-response time by 40%" class="w-full h-full object-cover object-left transition-transform duration-500 ease-out group-hover:scale-[1.04]" />
+      </div>
+      <div class="p-8 sm:p-12 flex flex-col justify-center">
+        <span class="inline-flex items-center self-start rounded-full bg-white text-mauve text-xs font-medium px-3 py-1 border border-black/[0.05]">Product</span>
+        <h2 class="mt-5 font-serif text-3xl sm:text-4xl leading-[1.15] tracking-tight text-obsidian">
+          How we cut first-response time by 40% without adding headcount.
+        </h2>
+        <p class="mt-4 text-sm sm:text-base leading-relaxed text-obsidian/60">
+          A behind-the-scenes look at the routing changes, the collision detection rewrite, and the one dashboard nobody used until we made it impossible to ignore.
+        </p>
+        <div class="mt-7 flex items-center gap-3">
+          <img src="https://assets.tailwindplus.com/avatars/1.webp?size=160" alt="Mabel Chen" class="w-9 h-9 rounded-full object-cover" />
+          <div class="text-sm">
+            <span class="font-medium text-obsidian">Mabel Chen</span>
+            <span class="text-obsidian/50"> · Jun 2, 2026 · 6 min read</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </a>
+</section>
+
+<!-- ============ POST GRID ============ -->
+<section class="max-w-7xl mx-auto px-6 mt-16 lg:mt-24">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Post 1 -->
+    <a href="#" class="reveal feature-card group block bg-surface rounded-3xl p-2 pb-6 border border-black/[0.03]">
+      <div class="rounded-2xl overflow-hidden bg-white aspect-[16/10] border border-black/[0.05]">
+        <img src="https://assets.tailwindplus.com/screenshots/1.webp?left=1800&top=736&color=mauve" alt="Why collision detection matters more than you think" class="w-full h-full object-cover object-left-top transition-transform duration-500 ease-out group-hover:scale-[1.05]" />
+      </div>
+      <div class="px-5 mt-5">
+        <span class="inline-flex items-center rounded-full bg-white text-mauve text-[11px] font-medium px-2.5 py-1 border border-black/[0.05]">Product</span>
+        <h3 class="mt-3 text-lg font-medium text-obsidian leading-snug">Why collision detection matters more than you think</h3>
+        <p class="mt-2 text-sm leading-relaxed text-obsidian/60">The feature nobody notices until two agents apologize to the same customer twice.</p>
+        <p class="mt-4 text-xs text-obsidian/50">Theo Okafor · May 26, 2026</p>
+      </div>
+    </a>
+
+    <!-- Post 2 -->
+    <a href="#" class="reveal reveal-delay-1 feature-card group block bg-surface rounded-3xl p-2 pb-6 border border-black/[0.03]">
+      <div class="rounded-2xl overflow-hidden bg-white aspect-[16/10] border border-black/[0.05]">
+        <img src="https://assets.tailwindplus.com/screenshots/1.webp?right=1200&bottom=736&color=mauve" alt="The real cost of canned replies" class="w-full h-full object-cover object-left transition-transform duration-500 ease-out group-hover:scale-[1.05]" />
+      </div>
+      <div class="px-5 mt-5">
+        <span class="inline-flex items-center rounded-full bg-white text-mauve text-[11px] font-medium px-2.5 py-1 border border-black/[0.05]">Support</span>
+        <h3 class="mt-3 text-lg font-medium text-obsidian leading-snug">The real cost of canned replies</h3>
+        <p class="mt-2 text-sm leading-relaxed text-obsidian/60">We measured it. It’s not the time you save — it’s the customer you lose.</p>
+        <p class="mt-4 text-xs text-obsidian/50">Sam Delgado · May 19, 2026</p>
+      </div>
+    </a>
+
+    <!-- Post 3 -->
+    <a href="#" class="reveal reveal-delay-2 feature-card group block bg-surface rounded-3xl p-2 pb-6 border border-black/[0.03]">
+      <div class="rounded-2xl overflow-hidden bg-white aspect-[16/10] border border-black/[0.05]">
+        <img src="https://assets.tailwindplus.com/screenshots/1.webp?left=1400&top=200&color=mauve" alt="Inside our $80M Series A" class="w-full h-full object-cover object-left transition-transform duration-500 ease-out group-hover:scale-[1.05]" />
+      </div>
+      <div class="px-5 mt-5">
+        <span class="inline-flex items-center rounded-full bg-white text-mauve text-[11px] font-medium px-2.5 py-1 border border-black/[0.05]">Company</span>
+        <h3 class="mt-3 text-lg font-medium text-obsidian leading-snug">Inside our $80M Series A</h3>
+        <p class="mt-2 text-sm leading-relaxed text-obsidian/60">What we raised, why now, and what we’re absolutely not going to spend it on.</p>
+        <p class="mt-4 text-xs text-obsidian/50">Mabel Chen · May 12, 2026</p>
+      </div>
+    </a>
+
+    <!-- Post 4 -->
+    <a href="#" class="reveal feature-card group block bg-surface rounded-3xl p-2 pb-6 border border-black/[0.03]">
+      <div class="rounded-2xl overflow-hidden bg-white aspect-[16/10] border border-black/[0.05]">
+        <img src="https://assets.tailwindplus.com/screenshots/1.webp?left=1200&top=736&color=mauve" alt="Shipping the Inbox Agent" class="w-full h-full object-cover object-left transition-transform duration-500 ease-out group-hover:scale-[1.05]" />
+      </div>
+      <div class="px-5 mt-5">
+        <span class="inline-flex items-center rounded-full bg-white text-mauve text-[11px] font-medium px-2.5 py-1 border border-black/[0.05]">Engineering</span>
+        <h3 class="mt-3 text-lg font-medium text-obsidian leading-snug">Shipping the Inbox Agent: three failed launches</h3>
+        <p class="mt-2 text-sm leading-relaxed text-obsidian/60">What broke, what we rolled back, and what finally shipped without waking anyone up at 3am.</p>
+        <p class="mt-4 text-xs text-obsidian/50">Marcus Webb · May 5, 2026</p>
+      </div>
+    </a>
+
+    <!-- Post 5 -->
+    <a href="#" class="reveal reveal-delay-1 feature-card group block bg-surface rounded-3xl p-2 pb-6 border border-black/[0.03]">
+      <div class="rounded-2xl overflow-hidden bg-white aspect-[16/10] border border-black/[0.05]">
+        <img src="https://assets.tailwindplus.com/screenshots/1.webp?left=1800&top=200&color=mauve" alt="How CloudStar cut response time in half" class="w-full h-full object-cover object-left-top transition-transform duration-500 ease-out group-hover:scale-[1.05]" />
+      </div>
+      <div class="px-5 mt-5">
+        <span class="inline-flex items-center rounded-full bg-white text-mauve text-[11px] font-medium px-2.5 py-1 border border-black/[0.05]">Customers</span>
+        <h3 class="mt-3 text-lg font-medium text-obsidian leading-snug">How CloudStar cut response time in half</h3>
+        <p class="mt-2 text-sm leading-relaxed text-obsidian/60">A support team of four, thousands of tickets a month, and one very tired inbox — before Oatmeal.</p>
+        <p class="mt-4 text-xs text-obsidian/50">Lena Ortiz · Apr 28, 2026</p>
+      </div>
+    </a>
+
+    <!-- Post 6 -->
+    <a href="#" class="reveal reveal-delay-2 feature-card group block bg-surface rounded-3xl p-2 pb-6 border border-black/[0.03]">
+      <div class="rounded-2xl overflow-hidden bg-white aspect-[16/10] border border-black/[0.05]">
+        <img src="https://assets.tailwindplus.com/screenshots/1.webp?right=1400&bottom=400&color=mauve" alt="A brief, biased history of the away message" class="w-full h-full object-cover object-left transition-transform duration-500 ease-out group-hover:scale-[1.05]" />
+      </div>
+      <div class="px-5 mt-5">
+        <span class="inline-flex items-center rounded-full bg-white text-mauve text-[11px] font-medium px-2.5 py-1 border border-black/[0.05]">Culture</span>
+        <h3 class="mt-3 text-lg font-medium text-obsidian leading-snug">A brief, biased history of the away message</h3>
+        <p class="mt-2 text-sm leading-relaxed text-obsidian/60">From AOL Instant Messenger to auto-drafted replies — a highly unnecessary deep dive.</p>
+        <p class="mt-4 text-xs text-obsidian/50">Priya Nair · Apr 21, 2026</p>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ============ NEWSLETTER ============ -->
+<section class="max-w-7xl mx-auto px-6 mt-24 lg:mt-40">
+  <div class="relative isolate overflow-hidden rounded-[2rem] bg-mauve px-6 py-16 sm:px-12 sm:py-20 text-center">
+    <div class="absolute inset-0 -z-20 bg-[radial-gradient(120%_120%_at_50%_0%,transparent_40%,#2C2428_130%)]"></div>
+    <div class="grain-overlay absolute inset-0 -z-10 pointer-events-none"></div>
+
+    <div class="reveal relative z-10 max-w-xl mx-auto">
+      <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl leading-[1.1] tracking-tight text-white">
+        Don’t miss the next rant.
+      </h2>
+      <p class="mt-4 text-base sm:text-lg font-light leading-relaxed text-white/80">
+        One email a month. Product updates, support lessons, zero growth-hacking advice.
+      </p>
+
+      <form class="reveal reveal-delay-1 mt-8" onsubmit="return false;">
+        <div class="flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/10 p-1.5 pl-5 focus-within:ring-2 focus-within:ring-white/30 transition-shadow max-w-md mx-auto">
+          <i data-lucide="mail" class="w-4 h-4 text-white/60 shrink-0"></i>
+          <input
+            type="email"
+            placeholder="Enter your email"
+            aria-label="Email address"
+            class="flex-1 bg-transparent text-sm text-white placeholder-white/50 focus:outline-none min-w-0"
+          />
+          <button type="submit" class="shrink-0 inline-flex items-center gap-1.5 rounded-full bg-white text-obsidian text-sm font-medium px-5 py-2.5 hover:opacity-90 transition-opacity">
+            Subscribe
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bg-surface mt-24 lg:mt-40">
+  <div class="max-w-7xl mx-auto px-6 py-16">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+      <div class="col-span-2 md:col-span-3 lg:col-span-1">
+        <span class="font-serif text-3xl leading-none text-obsidian">Oatmeal.</span>
+        <p class="mt-4 text-sm text-obsidian/55 max-w-xs">Customer support that feels like a conversation — even when it isn’t.</p>
+      </div>
+
+      <div>
+        <h4 class="text-sm font-medium text-obsidian">Product</h4>
+        <ul class="mt-4 space-y-2.5 text-sm text-obsidian/55">
+          <li><a href="index.html" class="hover:opacity-70 transition-opacity">Shared inbox</a></li>
+          <li><a href="index.html" class="hover:opacity-70 transition-opacity">Inbox agent</a></li>
+          <li><a href="index.html#pricing" class="hover:opacity-70 transition-opacity">Pricing</a></li>
+          <li><a href="#" class="hover:opacity-70 transition-opacity">Changelog</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-sm font-medium text-obsidian">Company</h4>
+        <ul class="mt-4 space-y-2.5 text-sm text-obsidian/55">
+          <li><a href="about.html" class="hover:opacity-70 transition-opacity">About</a></li>
+          <li><a href="#" class="hover:opacity-70 transition-opacity">Careers</a></li>
+          <li><a href="blog.html" class="hover:opacity-70 transition-opacity">Blog</a></li>
+          <li><a href="#" class="hover:opacity-70 transition-opacity">Press</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-sm font-medium text-obsidian">Resources</h4>
+        <ul class="mt-4 space-y-2.5 text-sm text-obsidian/55">
+          <li><a href="#" class="hover:opacity-70 transition-opacity">Docs</a></li>
+          <li><a href="#" class="hover:opacity-70 transition-opacity">Help center</a></li>
+          <li><a href="#" class="hover:opacity-70 transition-opacity">API reference</a></li>
+          <li><a href="#" class="hover:opacity-70 transition-opacity">Status</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-sm font-medium text-obsidian">Legal</h4>
+        <ul class="mt-4 space-y-2.5 text-sm text-obsidian/55">
+          <li><a href="#" class="hover:opacity-70 transition-opacity">Privacy</a></li>
+          <li><a href="#" class="hover:opacity-70 transition-opacity">Terms</a></li>
+          <li><a href="#" class="hover:opacity-70 transition-opacity">Cookies</a></li>
+          <li><a href="#" class="hover:opacity-70 transition-opacity">DPA</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-14 pt-8 border-t border-black/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-sm text-obsidian/50">© 2026 Oatmeal, Inc. All rights reserved.</p>
+      <div class="flex items-center gap-5 text-obsidian/50">
+        <a href="#" aria-label="Twitter" class="hover:opacity-70 transition-opacity"><i data-lucide="twitter" class="w-4 h-4"></i></a>
+        <a href="#" aria-label="GitHub" class="hover:opacity-70 transition-opacity"><i data-lucide="github" class="w-4 h-4"></i></a>
+        <a href="#" aria-label="LinkedIn" class="hover:opacity-70 transition-opacity"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    if (window.lucide) lucide.createIcons();
+
+    var revealEls = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window) || !revealEls.length) {
+      revealEls.forEach(function (el) { el.classList.add('reveal-visible'); });
+      return;
+    }
+
+    var observer = new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('reveal-visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -80px 0px' });
+
+    revealEls.forEach(function (el) { observer.observe(el); });
+  });
+</script>
+
+</body>
+</html>
